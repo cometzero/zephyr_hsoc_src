@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: <text>Copyright 2025-2026 Arm Limited and/or its
+# affiliates <open-source-office@arm.com></text>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+CONFIG_BOARD_APOLLO_FVP_SAFETY_ISLAND=y
+
+# Image format
+CONFIG_AARCH64_IMAGE_HEADER=y
+
+# Cache management
+CONFIG_CACHE_MANAGEMENT=y
+
+CONFIG_THREAD_STACK_INFO=y
+
+# Enable Timer and Sys clock
+CONFIG_SYS_CLOCK_TICKS_PER_SEC=100
+CONFIG_ARM_ARCH_TIMER=y
+
+# Enable UART driver
+CONFIG_SERIAL=y
+
+# Enable serial port
+CONFIG_UART_PL011=y
+
+# Enable console
+CONFIG_CONSOLE=y
+CONFIG_UART_CONSOLE=y
+
+# Enable simulate cpu power management
+CONFIG_SOC_FVP_AEMV8R_SIMULATE_CPU_PM=y
+CONFIG_PM_CPU_OPS=y
+CONFIG_PM_CPU_OPS_PSCI=n
+CONFIG_ARM64_SET_VMPIDR_EL2=y
+
+CONFIG_MAX_THREAD_BYTES=3
+
+CONFIG_SMP=y
+CONFIG_MP_MAX_NUM_CPUS=4
+
+# Enable prehook
+CONFIG_SOC_PREP_HOOK=y
+
+# Enable CRC and image integrity check
+CONFIG_ENABLE_IMAGE_INTEGRITY_CHECK=y
+CONFIG_CRC=y
+
+# Shell
+CONFIG_SHELL_STACK_SIZE=8192
+CONFIG_SHELL_BACKEND_SERIAL_RX_RING_BUFFER_SIZE=256
+
+# Logging
+CONFIG_LOG=y
+CONFIG_LOG_PRINTK=n
+CONFIG_LOG_BUFFER_SIZE=4096
+
+# Number of largest doorbells of MHUv3 device
+CONFIG_MBOX_MHUV3_NUM_DBCH=32
+
+CONFIG_COMPILER_WARNINGS_AS_ERRORS=y

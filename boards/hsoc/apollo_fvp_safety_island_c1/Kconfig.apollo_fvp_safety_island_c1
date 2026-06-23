@@ -1,0 +1,47 @@
+# SPDX-FileCopyrightText: <text>Copyright 2025-2026 Arm Limited and/or its
+# affiliates <open-source-office@arm.com></text>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+config BOARD_APOLLO_FVP_SAFETY_ISLAND
+	bool "Safety Island clusters of Apollo FVP Safety Island simulation board"
+	select SOC_FVP_AEMV8R_AARCH64
+	select SOC_SERIES_FVP_AEMV8R
+
+menu "Safety Island net init"
+
+menuconfig SI_NET_INIT
+	bool "Safety Island network init"
+	depends on NETWORKING
+	depends on NET_IPV4
+	depends on NET_CONFIG_SETTINGS
+	default n
+	help
+	  Initialize IPv4 networking for a specific interface at boot.
+
+if SI_NET_INIT
+
+config SI_NET_INIT_PRIORITY
+	int "Network init priority"
+	default 90
+	range 0 99
+	help
+	  SYS_INIT priority for the Safety Island network init.
+
+config SI_NET_INIT_IFACE_INDEX
+	int "Interface index to configure"
+	default 2
+	range 1 8
+	help
+	  Interface index to configure (e.g. 2 for the RPMsg veth).
+
+config SI_NET_INIT_CLEAR_IFACE_INDEX
+	int "Interface index to clear"
+	default 1
+	range 1 8
+	help
+	  Interface index to clear before configuring the target interface.
+
+endif # SI_NET_INIT
+
+endmenu

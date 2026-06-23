@@ -1,0 +1,13 @@
+# SPDX-FileCopyrightText: <text>Copyright 2025-2026 Arm Limited and/or its
+# affiliates <open-source-office@arm.com></text>
+#
+# SPDX-License-Identifier: Apache-2.0
+---
+identifier: apollo_fvp_safety_island_c1
+name: FVP Emulation Apollo FVP Safety Island cluster 1
+arch: arm64
+type: sim
+toolchain:
+  - zephyr
+  - cross-compile
+ram: 8192

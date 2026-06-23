@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: <text>Copyright 2025-2026 Arm Limited and/or its
+# affiliates <open-source-office@arm.com></text>
+#
+# SPDX-License-Identifier: Apache-2.0
+
+if BOARD_APOLLO_FVP_SAFETY_ISLAND
+
+config BUILD_OUTPUT_BIN
+	default y
+
+config BOARD_TARGET
+	default "apollo_fvp_safety_island"
+
+config NUM_IRQS
+	default 256
+
+if LOG
+
+# Deferred logging performance is unpredictable in the FVP due to timer
+# simulation inaccuracies, so log synchronously by default
+choice LOG_MODE
+        default LOG_MODE_IMMEDIATE
+endchoice
+
+endif # LOG
+
+if SHELL
+
+# The Safety Island is resource-constrained and the default shell uses escape
+# characters that complicate automated testing
+config SHELL_MINIMAL
+	default y
+
+endif # SHELL
+
+endif # BOARD_APOLLO_FVP_SAFETY_ISLAND
