@@ -5,3 +5,4 @@
 # SPDX-License-Identifier: Apache-2.0
 
 rsource "boards/hsoc/apollo_fvp_safety_island_c1/Kconfig.apollo_fvp_safety_island_c1"
+rsource "boards/hsoc/apollo_qvp_safety_island_c1/Kconfig.apollo_qvp_safety_island_c1"
