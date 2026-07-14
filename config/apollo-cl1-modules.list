@@ -1,0 +1,10 @@
+# Zephyr module order used by Apollo FVP local CL1 builds.
+# Paths are relative to the Yocto zephyr-demos-cl1 ${UNPACKDIR}/git tree,
+# except the local tokens below.
+modules/hal/cmsis
+modules/hal/libmetal
+modules/lib/open-amp
+# Common Safety Island Zephyr sources from arm-zena-css.
+arm_zena_safety_island
+# Apollo-specific board, overlays, and HSOC Zephyr integration sources.
+zephyr_hsoc_src
