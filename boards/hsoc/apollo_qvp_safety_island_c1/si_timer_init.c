@@ -17,10 +17,12 @@ static int si_timer_frequency_check(void)
 	uint64_t cntfrq = read_cntfrq_el0();
 	bool match = cntfrq == CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC;
 
-	printk("APOLLO_SI1_TIMER cntfrq=%llu configured=%u status=%s\n",
+	printk("APOLLO_SI1_TIMER cntfrq=%llu configured=%u status=%s "
+	       "ticks_per_sec=%u tickless=%d\n",
 	       (unsigned long long)cntfrq,
 	       CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC,
-	       match ? "PASS" : "FAIL");
+	       match ? "PASS" : "FAIL", CONFIG_SYS_CLOCK_TICKS_PER_SEC,
+	       IS_ENABLED(CONFIG_TICKLESS_KERNEL));
 
 	return match ? 0 : -EINVAL;
 }
