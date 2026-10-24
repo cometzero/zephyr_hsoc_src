@@ -1,0 +1,79 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/dts-v1/;
+#include <mem.h>
+#include <arm64/armv8-r.dtsi>
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <zephyr/dt-bindings/memory-attr/memory-attr-arm.h>
+
+/ {
+	#address-cells = <2>;
+	#size-cells = <1>;
+	model = "Apollo standalone Safety Island CL1 benchmark";
+	chosen {
+		zephyr,sram = &sram0;
+		zephyr,console = &uart0;
+	};
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		cpu@10000 { device_type = "cpu"; compatible = "arm,cortex-r82";
+			reg = <0x10000>; };
+		cpu@10100 { device_type = "cpu"; compatible = "arm,cortex-r82";
+			reg = <0x10100>; };
+		cpu@10200 { device_type = "cpu"; compatible = "arm,cortex-r82";
+			reg = <0x10200>; };
+		cpu@10300 { device_type = "cpu"; compatible = "arm,cortex-r82";
+			reg = <0x10300>; };
+	};
+	timer {
+		compatible = "arm,armv8-timer";
+		interrupt-parent = <&gic>;
+		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>,
+			<GIC_PPI 4 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>,
+			<GIC_PPI 11 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>,
+			<GIC_PPI 3 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+	};
+	uartclk: apb-pclk {
+		compatible = "fixed-clock";
+		clock-frequency = <24000000>;
+		#clock-cells = <0>;
+	};
+	gic_region: memory@30200000 {
+		compatible = "zephyr,memory-region", "mmio-sram";
+		reg = <0 0x30200000 DT_SIZE_M(1)>;
+		zephyr,memory-region = "SI_GIC_VIEW2";
+		zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_IO)>;
+	};
+	soc {
+		#address-cells = <2>;
+		#size-cells = <1>;
+		interrupt-parent = <&gic>;
+		gic: interrupt-controller@30200000 {
+			compatible = "arm,gic-v3", "arm,gic";
+			redistributor-regions = <4>;
+			reg = <0 0x30200000 0x10000>, <0 0x30260000 0x20000>,
+				<0 0x30280000 0x20000>, <0 0x302a0000 0x20000>,
+				<0 0x302c0000 0x20000>;
+			interrupt-controller;
+			#interrupt-cells = <4>;
+		};
+		uart0: uart@2a410000 {
+			compatible = "arm,pl011";
+			reg = <0 0x2a410000 0x1000>;
+			interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL IRQ_DEFAULT_PRIORITY>;
+			interrupt-names = "irq_0";
+			clocks = <&uartclk>;
+			current-speed = <115200>;
+		};
+		sram0: memory@140000000 {
+			compatible = "mmio-sram";
+			reg = <1 0x40000000 DT_SIZE_M(8)>;
+		};
+		device_region: memory@2a000000 {
+			compatible = "zephyr,memory-region", "mmio-sram";
+			reg = <0 0x2a000000 DT_SIZE_M(32)>;
+			zephyr,memory-region = "SI_PERIPHERALS";
+			zephyr,memory-attr = <DT_MEM_ARM(ATTR_MPU_IO)>;
+		};
+	};
+};

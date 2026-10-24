@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: Apache-2.0
+if BOARD_APOLLO_SI_CL1_BENCH
+
+config BUILD_OUTPUT_BIN
+       default y
+
+config NUM_IRQS
+       default 512
+
+endif

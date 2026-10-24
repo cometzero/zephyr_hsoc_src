@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: Apache-2.0
+board:
+  name: apollo_si_cl1_bench
+  full_name: Apollo standalone Safety Island CL1 benchmark
+  vendor: hsoc
+  socs:
+    - name: fvp_aemv8r_aarch64
